@@ -1,6 +1,6 @@
 {
     "Application": {
-        "ApplicationDate": "2025-09-26",
+        "ApplicationDate": "2025-01-24",
         "CallID": 1,
         "CallType": "abc",
         "DeliveryOptionCode": "abc",
@@ -24,21 +24,21 @@
                         "InterestRate_Mrtg": 123,
                         "MaxGracePeriodForInterest": 123,
                         "MaxGracePeriodForPrincipal": 123,
-                        "MaxLoanAmount": 123,
+                        "MaxLoanAmount": 80000,
                         "MaxLoanTerm": 48,
-                        "MinAPR": 123,
+                        "MinAPR": 0.11,
                         "InterestRate_Sec": 123,
                         "MinGracePeriodForInterest": 123,
                         "MinGracePeriodForPrincipal": 123,
-                        "MinLoanAmount": 300,
+                        "MinLoanAmount": 230,
                         "MinLoanTerm": 3,
                         "MonthlyFee": 123,
                         "NewAccountCashWithdrawalFeeRateBranch": 123,
                         "MinDaysToFirstPayment": 123,
                         "MaxDaysToFirstPayment": 123,
-                        "DisbursementFeeMinAmount": 123,
-                        "DisbursementFeeFixedAmount": 123,
-                        "DisbursementFeeRate": 123,
+                        "DisbursementFeeMinAmount": 5,
+                        "DisbursementFeeFixedAmount": 10,
+                        "DisbursementFeeRate": 2.5,
                         "PrePaymentFees": {
                             "PrePaymentFee": [
                                 {
@@ -56,12 +56,28 @@
                         "InsuranceByLoanAmount": {
                             "InsuranceAmount": [
                                 {
-                                    "LoanAmount": 123,
-                                    "Value": 123
+                                    "LoanAmount": 1000,
+                                    "Value": 1
                                 },
                                 {
-                                    "LoanAmount": 123,
-                                    "Value": 123
+                                    "LoanAmount": 5000,
+                                    "Value": 5
+                                },
+                                {
+                                    "LoanAmount": 10000,
+                                    "Value": 10
+                                },
+                                {
+                                    "LoanAmount": 20000,
+                                    "Value": 12
+                                },
+                                {
+                                    "LoanAmount": 30000,
+                                    "Value": 14
+                                },
+                                {
+                                    "LoanAmount": 80001,
+                                    "Value": 16
                                 }
                             ]
                         }
@@ -101,7 +117,6 @@
                     "CompanyStatus": 103,
                     "ApplicationChannel": "abc",
                     "CalculationDate": 123,
-                    "GracePeriod": 123,
                     "ApplicationMinData": {
                         "RequestedRepayment": 150,
                         "RequestedTerm": 48,
@@ -110,7 +125,7 @@
                     "SystemInformation": {
                         "BranchRegion": "abc",
                         "BranchID": "123",
-                        "ApplicationId": "OM23948",
+                        "ApplicationId": "OM239480",
                         "ActionNumber": 123,
                         "DataBaseApplicationID": 10
                     },
@@ -164,9 +179,9 @@
                     "Applicant": [
                         {
                             "IsPropertyOwnerFlag": false,
-                            "PID": "15003008541",
+                            "PID": "62003008541",
                             "BirthDate": "1995-12-01",
-                            "DocumentIssueDate": "2025-01-03",
+                            "DocumentIssueDate": "2025-01-09",
                             "ApplicantID": "123",
                             "ApplicantType": "Applicant",
                             "Citizenship": "abc",
@@ -214,248 +229,12 @@
                                 },
                                 "APMApplicationHistory": {
                                     "APMApplication": [
-                                        {
-                                            "ApplicationDecisionStatus": "APPROVE",
-                                            "ApplicationStatus": "APPROVE",
-                                            "IsInProgress": true,
-                                            "IsSelfEmployedIncomeFlag": false,
-                                            "ProductName": "CL_WS",
-                                            "Amount": 5000,
-                                            "Currency": "GEL",
-                                            "InterestRate": 7,
-                                            "MonthlyPaymentAmount": 300,
-                                            "MonthlyAmountPayment_Variable": 15,
-                                            "LongTermMonthlyPaymentAmount": 90,
-                                            "IncomeShare": 100,
-                                            "IsInControlGroupFlag": false,
-                                            "IsProlongation": false,
-                                            "IsDeclinedByRiskManagerFlag": false,
-                                            "ApplicationDate": "2025-08-27",
-                                            "ApplicationID": "abc",
-                                            "ProductCategory": "abc"
-                                        },
-                                        {
-                                            "ApplicationDecisionStatus": "APPROVE",
-                                            "ApplicationStatus": "APPROVE",
-                                            "IsInProgress": true,
-                                            "IsSelfEmployedIncomeFlag": false,
-                                            "ProductName": "FCL",
-                                            "Amount": 5000,
-                                            "Currency": "GEL",
-                                            "InterestRate": 7,
-                                            "MonthlyPaymentAmount": 300,
-                                            "MonthlyAmountPayment_Variable": 15,
-                                            "LongTermMonthlyPaymentAmount": 90,
-                                            "IncomeShare": 100,
-                                            "IsInControlGroupFlag": false,
-                                            "IsProlongation": false,
-                                            "IsDeclinedByRiskManagerFlag": true,
-                                            "ApplicationDate": "2025-08-26",
-                                            "ApplicationID": "abc",
-                                            "ProductCategory": "abc"
-                                        }
+                                        
                                     ]
                                 },
                                 "BasicCreditHistory": {
                                     "Loan": [
-                                        {
-                                            "EntityID": "TB111",
-                                            "LifeInsuranceRate": 0.05,
-                                            "LifeInsuranceAmount": 1,
-                                            "AccruedInsurance": 100,
-                                            "AccruedInterest": 1,
-                                            "AccruedPenalty": 100,
-                                            "PaidPenalty": 100,
-                                            "AgreementId": "abc",
-                                            "BorrowingShare": 123,
-                                            "LifeInsuranceShare": 123,
-                                            "CloseDateReal1": "2021-01-01",
-                                            "DPD": 9,
-                                            "FeePaymentAmount": 123,
-                                            "InstitutionName": "abc",
-                                            "InsurancePastDueAmount": 1,
-                                            "InsurancePaymentAmount": 1,
-                                            "InterestPastDueAmount": 1,
-                                            "InterestPaymentAmount": 1,
-                                            "InterestRate": 17,
-                                            "InterestRate_Variable": 7.5,
-                                            "InterestRate_Min": 4.5,
-                                            "IsProlongation": false,
-                                            "IsSelfEmployedIncomeFlag": false,
-                                            "IsRefinanced": false,
-                                            "IsClosed": false,
-                                            "IsRestructurized": false,
-                                            "IsInControlGroupFlag": false,
-                                            "Is6PaymentsPayedFlag": true,
-                                            "IsVariable": false,
-                                            "IsSold": false,
-                                            "IsOwnFundsRefinancing": false,
-                                            "LastOverdueDate1": "2025-09-10",
-                                            "LastRestructurizationDate": "2025-01-05",
-                                            "LimitAmount": 10000,
-                                            "LimitCurrency": "USD",
-                                            "MonthlyPaymentAmount": 1,
-                                            "MaxMonthlyPaymentAmount": 500,
-                                            "BusinessMonthlyPaymentAmount": 600,
-                                            "PenaltyAmount": 1,
-                                            "Reserve": 123,
-                                            "OutstandingAmount": 1000,
-                                            "PALRefinanceFlag": false,
-                                            "PastDueAmount": 1,
-                                            "PrincipalPastDueAmount": 1,
-                                            "PrincipalPaymentAmount": 1,
-                                            "RefinanceBalance": 10000,
-                                            "RefinanceFlag": true,
-                                            "ClientRefinanceFlag": true,
-                                            "StartDate": "2018-12-05",
-                                            "CustomerRole": "CLIENT_ROLE_BORROWER",
-                                            "ProductName": "FCL",
-                                            "CEBorrowingShare": 100,
-                                            "CloseDateScheduled": "2025-09-29",
-                                            "NumberOfPaymentsLeft": 1,
-                                            "RepaymentDate": "2026-01-06",
-                                            "SAAccruedPenalty": 1,
-                                            "SAPrepaymentFeeRate": 123,
-                                            "StartDate_Variable": "2026-01-29",
-                                            "IsInsiderLoan": false,
-                                            "TotalAmountToCover": 1,
-                                            "WriteOffDate": "2025-09-22",
-                                            "UseProlongationFlag": true,
-                                            "MaxTermLMS": 240,
-                                            "ProlongationFlag": false,
-                                            "Securities": {
-                                                "Security": [
-                                                    {
-                                                        "Status": "abc",
-                                                        "SecurityType": "COLLATERAL_PROP_TYPE_010102",
-                                                        "SecurityValue": 3000,
-                                                        "Currency": "USD",
-                                                        "OwnerInsiderFlag": true
-                                                    },
-                                                    {
-                                                        "Status": "abc",
-                                                        "SecurityType": "COLLATERAL_PROP_TYPE_09",
-                                                        "SecurityValue": 300,
-                                                        "Currency": "USD",
-                                                        "OwnerInsiderFlag": true
-                                                    }
-                                                ]
-                                            },
-                                            "PrePaymentFees": {
-                                                "PrePaymentFee": [
-                                                    {
-                                                        "Count": 123,
-                                                        "Rate": 123,
-                                                        "Source": "abc"
-                                                    },
-                                                    {
-                                                        "Count": 123,
-                                                        "Rate": 123,
-                                                        "Source": "abc"
-                                                    }
-                                                ]
-                                            },
-                                            "ProductCategory": "abc"
-                                        },
-                                        {
-                                            "EntityID": "TB111",
-                                            "LifeInsuranceRate": 0.05,
-                                            "LifeInsuranceAmount": 1,
-                                            "AccruedInsurance": 70,
-                                            "AccruedInterest": 80,
-                                            "AccruedPenalty": 90,
-                                            "PaidPenalty": 100,
-                                            "AgreementId": "abc",
-                                            "BorrowingShare": 123,
-                                            "LifeInsuranceShare": 123,
-                                            "CloseDateReal1": "2021-01-01",
-                                            "DPD": 9,
-                                            "FeePaymentAmount": 123,
-                                            "InstitutionName": "abc",
-                                            "InsurancePastDueAmount": 700,
-                                            "InsurancePaymentAmount": 500,
-                                            "InterestPastDueAmount": 900,
-                                            "InterestPaymentAmount": 800,
-                                            "InterestRate": 17,
-                                            "InterestRate_Variable": 7.5,
-                                            "InterestRate_Min": 4.5,
-                                            "IsProlongation": false,
-                                            "IsSelfEmployedIncomeFlag": false,
-                                            "IsRefinanced": false,
-                                            "IsClosed": false,
-                                            "IsRestructurized": false,
-                                            "IsInControlGroupFlag": false,
-                                            "Is6PaymentsPayedFlag": true,
-                                            "IsVariable": false,
-                                            "IsSold": false,
-                                            "IsOwnFundsRefinancing": false,
-                                            "LastOverdueDate1": "2025-09-10",
-                                            "LastRestructurizationDate": "2025-01-05",
-                                            "LimitAmount": 10000,
-                                            "LimitCurrency": "USD",
-                                            "MonthlyPaymentAmount": 800,
-                                            "MaxMonthlyPaymentAmount": 500,
-                                            "BusinessMonthlyPaymentAmount": 600,
-                                            "PenaltyAmount": 800,
-                                            "Reserve": 123,
-                                            "OutstandingAmount": 1000,
-                                            "PALRefinanceFlag": false,
-                                            "PastDueAmount": 500,
-                                            "PrincipalPastDueAmount": 900,
-                                            "PrincipalPaymentAmount": 600,
-                                            "RefinanceBalance": 10000,
-                                            "RefinanceFlag": true,
-                                            "ClientRefinanceFlag": true,
-                                            "StartDate": "2018-12-05",
-                                            "CustomerRole": "CLIENT_ROLE_BORROWER",
-                                            "ProductName": "FCL",
-                                            "CEBorrowingShare": 100,
-                                            "CloseDateScheduled": "2025-09-29",
-                                            "NumberOfPaymentsLeft": 1,
-                                            "RepaymentDate": "2026-01-06",
-                                            "SAAccruedPenalty": 900,
-                                            "SAPrepaymentFeeRate": 123,
-                                            "StartDate_Variable": "2026-01-29",
-                                            "IsInsiderLoan": false,
-                                            "TotalAmountToCover": 900,
-                                            "WriteOffDate1": "2025-09-01",
-                                            "UseProlongationFlag": true,
-                                            "MaxTermLMS": 240,
-                                            "ProlongationFlag": false,
-                                            "Securities": {
-                                                "Security": [
-                                                    {
-                                                        "Status": "abc",
-                                                        "SecurityType": "COLLATERAL_PROP_TYPE_010102",
-                                                        "SecurityValue": 3000,
-                                                        "Currency": "USD",
-                                                        "OwnerInsiderFlag": true
-                                                    },
-                                                    {
-                                                        "Status": "abc",
-                                                        "SecurityType": "COLLATERAL_PROP_TYPE_09",
-                                                        "SecurityValue": 300,
-                                                        "Currency": "USD",
-                                                        "OwnerInsiderFlag": true
-                                                    }
-                                                ]
-                                            },
-                                            "PrePaymentFees": {
-                                                "PrePaymentFee": [
-                                                    {
-                                                        "Count": 123,
-                                                        "Rate": 123,
-                                                        "Source": "abc"
-                                                    },
-                                                    {
-                                                        "Count": 123,
-                                                        "Rate": 123,
-                                                        "Source": "abc"
-                                                    }
-                                                ]
-                                            },
-                                            "ProductCategory": "abc"
-                                        }
+                                        
                                     ]
                                 },
                                 "BehaviouralScoring": {
@@ -466,9 +245,8 @@
                                     "BigDataScoring": {
                                         "Scoring": [
                                             {
-                                                "Bin": 4,
-                                                "FPD_Bin": 8,
-                                                "M3_Bin": 3
+                                                "SegmentGroup": "Payroll3",
+                                                "Bin": 1
                                             }
                                         ]
                                     }
@@ -502,44 +280,67 @@
                                     }
                                 },
                                 "FinancialDataInfo": {
-                                    "SumOfGamblingAmount_6": 123
+                                    "SumOfGamblingAmount_6": 1321
                                 },
                                 "TBCTransactions": {
                                     "SalaryTransactionHistory": {
                                         "IncomeAmount": [
                                             {
                                                 "Period": 1,
-                                                "Amount": 3500,
-                                                "TaxCode": "abc"
+                                                "Amount": 101,
+                                                "Multiplicity": 2,
+                                                "TaxCode": "202886788"
                                             },
                                             {
                                                 "Period": 2,
-                                                "Amount": 3500,
-                                                "TaxCode": "abc"
+                                                "Amount": 101,
+                                                "Multiplicity": 1,
+                                                "TaxCode": "202886788"
+                                            },
+                                            {
+                                                "Period": 2,
+                                                "Amount": 101,
+                                                "Multiplicity": 3,
+                                                "TaxCode": "202886788"
                                             },
                                             {
                                                 "Period": 3,
-                                                "Amount": 3500,
-                                                "TaxCode": "abc"
+                                                "Amount": 101,
+                                                "Multiplicity": 3,
+                                                "TaxCode": "202886788"
                                             },
                                             {
                                                 "Period": 4,
-                                                "Amount": 3500,
-                                                "TaxCode": "abc"
+                                                "Amount": 101,
+                                                "Multiplicity": 3,
+                                                "TaxCode": "202886788"
                                             },
                                             {
                                                 "Period": 5,
-                                                "Amount": 1500,
-                                                "TaxCode": "abc"
+                                                "Amount": 101,
+                                                "Multiplicity": 3,
+                                                "TaxCode": "202886788"
+                                            },
+                                            {
+                                                "Period": 6,
+                                                "Amount": 101,
+                                                "Multiplicity": 3,
+                                                "TaxCode": "202886788"
                                             }
                                         ]
                                     },
                                     "BonusTransactionHistory": {
+                                        "IncomeAmount": []
+                                    },
+                                    "AnnualBonusTransactionHistory": {
+                                        "IncomeAmount": []
+                                    },
+                                    "OtherTransactionHistory": {
                                         "IncomeAmount": [
                                             {
-                                                "Period": 3,
-                                                "Amount": 2000,
-                                                "TaxCode": "abc"
+                                                "Period": 5,
+                                                "Amount": 1,
+                                                "TaxCode": "202886788"
                                             }
                                         ]
                                     }
@@ -581,16 +382,16 @@
                                         "TotalLimitP3": 600,
                                         "IncomeAmount": [
                                             {
-                                                "Period": 2,
-                                                "Amount": 5020
+                                                "Period": 3,
+                                                "Amount": 500
                                             },
                                             {
                                                 "Period": 2,
-                                                "Amount": 5200
+                                                "Amount": 500
                                             },
                                             {
                                                 "Period": 3,
-                                                "Amount": 5200
+                                                "Amount": 500
                                             }
                                         ]
                                     },
@@ -625,28 +426,28 @@
                                         "TransferAmount": [
                                             {
                                                 "Period": 1,
-                                                "Amount": 20000,
-                                                "Country": "USA",
+                                                "Amount": 500,
+                                                "Country": "ITA",
                                                 "Currency": "USD",
                                                 "Source": "TBC"
                                             },
                                             {
                                                 "Period": 2,
-                                                "Amount": 20000,
+                                                "Amount": 500,
                                                 "Country": "USA",
                                                 "Currency": "USD",
                                                 "Source": "TBC"
                                             },
                                             {
                                                 "Period": 3,
-                                                "Amount": 20000,
+                                                "Amount": 900,
                                                 "Country": "USA",
                                                 "Currency": "USD",
                                                 "Source": "TBC"
                                             },
                                             {
                                                 "Period": 4,
-                                                "Amount": 20000,
+                                                "Amount": 500,
                                                 "Country": "USA",
                                                 "Currency": "USD",
                                                 "Source": "TBC"
@@ -661,7 +462,7 @@
                                             {
                                                 "Period": 6,
                                                 "Amount": 500,
-                                                "Country": "USA",
+                                                "Country": "ITA",
                                                 "Currency": "USD",
                                                 "Source": "CB"
                                             }
@@ -675,7 +476,7 @@
                                     "ScoringReasons": {
                                         "ReasonCount": 123
                                     },
-                                    "BureauGrade": "E2",
+                                    "BureauGrade": "A",
                                     "CBProbabilityOfDefault": 123
                                 },
                                 "CreditBureauSubscribers": {
@@ -830,87 +631,7 @@
                                     "IncomeType": "abc"
                                 },
                                 "BasicCreditHistory": {
-                                    "Loan": [
-                                        {
-                                            "EntityID": "CB222",
-                                            "PropertyInsuranceTotalAmount": 123,
-                                            "PropertyInsuranceRate": 123,
-                                            "AutoInsuranceTotalAmount": 123,
-                                            "AutoInsuranceRate": 123,
-                                            "BorrowingShare": 123,
-                                            "CEBorrowingShare": 100,
-                                            "CloseDateScheduled": "2025-09-26",
-                                            "CustomerRole": "CLIENT_ROLE_CO_BORROWER",
-                                            "DPD": 12,
-                                            "FeePaymentAmount": 123,
-                                            "InstitutionName": "abc",
-                                            "PastDueAmount": 100,
-                                            "InterestRate": 12,
-                                            "IsProlongation": false,
-                                            "IsClosed": false,
-                                            "IsRestructurized": false,
-                                            "Is6PaymentsPayedFlag": false,
-                                            "Phase": "abc",
-                                            "IsOwnFundsRefinancing": false,
-                                            "LastOverdueDate1": "2025-09-01",
-                                            "LastRestructurizationDate": "2025-03-25",
-                                            "LimitAmount": 1000,
-                                            "MonthlyPaymentAmount": 1000,
-                                            "MaxMonthlyPaymentAmount": 25,
-                                            "PeriodicityOfPayments": "MonthlyInstalments30Days",
-                                            "BusinessMonthlyPaymentAmount": 700,
-                                            "NumberOfPaymentsLeft": 10,
-                                            "OutstandingAmount": 800,
-                                            "PrincipalPastDueAmount": 1000,
-                                            "ProductName": "DEB2",
-                                            "RefinanceBalance": 800,
-                                            "RefinanceFlag": true,
-                                            "ClientRefinanceFlag": true,
-                                            "SecurityStatus": "abc",
-                                            "StartDate": "2020-01-10",
-                                            "InstitutionType": "abc",
-                                            "Status": "IsNegative",
-                                            "WriteOffDate": "2025-09-21",
-                                            "ContractStatus": "abc",
-                                            "CurrentDaysInDeliquency1": 30,
-                                            "ProlongationFlag": false,
-                                            "AccruedPenalty": 700,
-                                            "LimitCurrency": "GEL",
-                                            "Securities": {
-                                                "Security": [
-                                                    {
-                                                        "Status": "abc",
-                                                        "SecurityType": "GUARANTEETYPE_REALESTATE",
-                                                        "SecurityValue": 60000,
-                                                        "Currency": "USD",
-                                                        "OwnerInsiderFlag": true
-                                                    },
-                                                    {
-                                                        "Status": "abc",
-                                                        "SecurityType": "abc",
-                                                        "SecurityValue": 123,
-                                                        "Currency": "USD",
-                                                        "OwnerInsiderFlag": true
-                                                    }
-                                                ]
-                                            },
-                                            "PrePaymentFees": {
-                                                "PrePaymentFee": [
-                                                    {
-                                                        "Count": 123,
-                                                        "Rate": 123,
-                                                        "Source": "abc"
-                                                    },
-                                                    {
-                                                        "Count": 123,
-                                                        "Rate": 123,
-                                                        "Source": "abc"
-                                                    }
-                                                ]
-                                            },
-                                            "ProductCategory": "abc"
-                                        }
-                                    ]
+                                    "Loan": []
                                 },
                                 "RequestResult": {
                                     "ReturnCode": false,
@@ -923,46 +644,7 @@
                                 }
                             },
                             "Jobs": {
-                                "JobInfo": [
-                                    {
-                                        "CurrentWorkExperience": 123,
-                                        "TotalWorkExperience": 123,
-                                        "EmployerCompany": "A",
-                                        "DifferentProfession": false,
-                                        "IsIncomeInGeorgia": false,
-                                        "IsExceptionPhotoJob": false,
-                                        "ApplicantIncome": {
-                                            "IncomeAmount": 3100,
-                                            "IncomeAmountGEL": 2400,
-                                            "IncomeCurrency": "GEL",
-                                            "IncomeId": 123,
-                                            "IsCurrencyRisk1": false,
-                                            "IsBusinessOwnerFlag": false,
-                                            "IncomeSource": "OTHER",
-                                            "IncomeType": "INCOME_TYPE_TRANSFER",
-                                            "EntityID": "888",
-                                            "SenderAge": 123,
-                                            "IncomeBank": "abc",
-                                            "IsIncomeApprovedByPhoto": false,
-                                            "Expense": 80,
-                                            "NBGMaxNetIncome": 1000,
-                                            "NBGExpenseRate": 10,
-                                            "OtherBankPeriod": 4,
-                                            "TbcSalaryPeriod": 123,
-                                            "CompanyName": "abc",
-                                            "Position": "abc",
-                                            "PosititionCategory": "abc",
-                                            "VerifiedIncome1": 777
-                                        }
-                                    }
-                                ]
-                            },
-                            "VerifiedIncome": {
-                                "Currency": "USD",
-                                "IncomeWay": "abc",
-                                "IncomeAmount": 123,
-                                "IncomeSelected": "abc",
-                                "TbcSalaryPeriod": 123
+                                "JobInfo": []
                             },
                             "RevenueServiceInfo": {
                                 "ClientConfirmation": false,
@@ -971,34 +653,47 @@
                                     "PayerDetail": [
                                         {
                                             "IncomeType": "SALARY",
-                                            "Income": 30000,
+                                            "Income": 10000,
                                             "SmallBussinesRevenue": 123,
                                             "TaxableTotalIncome": 0,
-                                            "Period": 3,
+                                            "Period": 11,
+                                            "TaxCode": "5555555",
                                             "IsTaxCodePID": true
                                         },
                                         {
                                             "IncomeType": "SALARY",
-                                            "Income": 30000,
+                                            "Income": 10000,
                                             "SmallBussinesRevenue": 123,
                                             "TaxableTotalIncome": 0,
-                                            "Period": 3,
+                                            "Period": 11,
+                                            "TaxCode": "5555555",
                                             "IsTaxCodePID": true
                                         },
                                         {
                                             "IncomeType": "SALARY",
-                                            "Income": 30000,
+                                            "Income": 10000,
                                             "SmallBussinesRevenue": 123,
                                             "TaxableTotalIncome": 0,
                                             "Period": 3,
+                                            "TaxCode": "5555555",
                                             "IsTaxCodePID": true
                                         },
                                         {
                                             "IncomeType": "SALARY",
-                                            "Income": 30000,
+                                            "Income": 10000,
                                             "SmallBussinesRevenue": 123,
                                             "TaxableTotalIncome": 0,
                                             "Period": 4,
+                                            "TaxCode": "5555555",
+                                            "IsTaxCodePID": true
+                                        },
+                                        {
+                                            "IncomeType": "SALARY",
+                                            "Income": 30000,
+                                            "SmallBussinesRevenue": 123,
+                                            "TaxableTotalIncome": 0,
+                                            "Period": 5,
+                                            "TaxCode": "5555555",
                                             "IsTaxCodePID": true
                                         }
                                     ]
@@ -1092,7 +787,7 @@
                         "StandardInsuranceRate": 123,
                         "CashWithdrawalFeeRate": 123,
                         "MinInterestRate": 123,
-                        "MaxInterestRate": 123,
+                        "MaxInterestRate": 1,
                         "PayrollOfferOwner": "abc",
                         "EmployerODB": "abc",
                         "ExceptionPayrollFlag": true
