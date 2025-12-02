@@ -1,6 +1,11 @@
 import math
 import numpy_financial as npf
 
+request = record.system.application.tbcbank.request
+node_currency = request.applicationdata.currency
+fx_rates = normalize(request.generalinfo.exchangerates.exchangerate)
+NBGExchangeRates = fx_rates[fx_rates["ExchangeRateType"] == "NBG"]
+
 # ==========================================
 # 1. GLOBAL CONFIG & DATA STRUCTURES
 # ==========================================
@@ -57,13 +62,12 @@ def calculate_offer(app_id, pricing_bin, req_amount, available_pmt, is_payroll, 
     
     fixed_insurance = get_fixed_insurance(req_amount)
     
-    fee_amt = max(req_amount * disb_rate_param /100 , disb_min_param)
+    fee_amt = max(req_amount * disb_rate_param / 100 , disb_min_param)
     net_limit = req_amount - fee_amt
     client_pmt = available_pmt - fixed_insurance
     
     is_test_group = str(app_id).endswith("0")
     
-    # --- STEP 1: Iterative Term Calculation ---
     term_step1 = 0
     final_eff_apr = 0
     is_npv_infinity = False
@@ -105,10 +109,9 @@ def calculate_offer(app_id, pricing_bin, req_amount, available_pmt, is_payroll, 
         term_step1 = 48 
         final_eff_apr = 26.0
 
-
     constraint_term = get_constraint_max_term(req_amount, final_eff_apr)
     term_step2 = max(term_step1, constraint_term)
-    term_step3 = max(term_step2, product_min_term)    
+    term_step3 = max(term_step2, product_min_term)     
     term_step4 = min(term_step3, product_max_term)
 
     final_limit = req_amount
@@ -122,7 +125,8 @@ def calculate_offer(app_id, pricing_bin, req_amount, available_pmt, is_payroll, 
         except Exception as e:
             final_rate = 0
     else:
-        new_net_limit = req_amount - fee_amt
+        eff_apr_dec = final_eff_apr / 100.0
+        new_net_limit = npf.pv(eff_apr_dec/12, final_term, -available_pmt)
 
         gross_via_pct = new_net_limit / (1 - disb_rate_param / 100)
         fee_via_pct = gross_via_pct * disb_rate_param / 100
@@ -130,7 +134,8 @@ def calculate_offer(app_id, pricing_bin, req_amount, available_pmt, is_payroll, 
         if fee_via_pct >= disb_min_param:
             final_limit = gross_via_pct
         else:
-            final_limit = new_net_limit + (disb_min_param / 100)
+            final_limit = new_net_limit + disb_min_param
+        
         final_fee = max(final_limit * disb_rate_param / 100, disb_min_param)
         final_net = final_limit - final_fee
         
@@ -143,7 +148,8 @@ def calculate_offer(app_id, pricing_bin, req_amount, available_pmt, is_payroll, 
         "Term": final_term,
         "Limit": final_limit,
         "InterestRate": final_rate,
-        "IsNPVInfinity": is_npv_infinity
+        "IsNPVInfinity": is_npv_infinity,
+        "EffAPR": final_eff_apr  # <--- FIXED: Added this to return statement
     }
 
 # ==========================================
@@ -216,6 +222,36 @@ try:
 except:
     max_loan_term = 48
 
+try:
+    cb_fixed_fee_param = record.system.application.tbcbank.request.productpolicycatalogue.productpolicy.disbursementfeefixedamount
+except:
+    cb_fixed_fee_param = 0
+
+try:
+    payroll_cw_rate = record.system.application.tbcbank.request.offersdatacall.payrolloffer.cashwithdrawalfeerate
+except:
+    payroll_cw_rate = 0
+
+try:
+    acc_cw_rate = record.system.application.tbcbank.request.account.cashwithdrawalfeerate
+except:
+    acc_cw_rate = 0
+
+try:
+    acc_selected = record.system.application.tbcbank.request.account.selectedtowithdraw
+except:
+    acc_selected = GDS_FALSE
+
+try:
+    pol_atm_rate = record.system.application.tbcbank.request.productpolicycatalogue.productpolicy.newaccountcashwithdrawalfeerateatm
+except:
+    pol_atm_rate = None
+
+try:
+    pol_branch_rate = record.system.application.tbcbank.request.productpolicycatalogue.productpolicy.newaccountcashwithdrawalfeeratebranch
+except:
+    pol_branch_rate = None
+
 # ==========================================
 # 4. EXECUTE ENGINE
 # ==========================================
@@ -240,24 +276,82 @@ final_term = result['Term']
 final_limit = result['Limit']
 final_rate = result['InterestRate']
 final_is_infinity = GDS_TRUE if result['IsNPVInfinity'] else GDS_FALSE
+final_eff_apr = result['EffAPR']
 
-new_pmt = npf.pmt(rate=final_rate/12, nper=final_term, pv=-final_limit)
+final_term_for_long = record.system.application.tbcbank.response.loanparameters.maxloanterm
+new_pmt_for_long = npf.pmt(rate=final_rate/12, nper=final_term_for_long, pv=-final_limit)
+new_pmt_for_st = npf.pmt(rate=final_rate/12, nper=final_term, pv=-final_limit)
+
+final_monthly_payment_amount = new_pmt_for_st + fixed_insurance
+final_monthly_payment_amount_long = new_pmt_for_long + fixed_insurance
+
+final_cb_fixed_fee = cb_fixed_fee_param
+
+final_cash_withdrawal_fee_rate = 0
+if is_payroll_flag is GDS_TRUE:
+    final_cash_withdrawal_fee_rate = payroll_cw_rate
+else:
+    final_cash_withdrawal_fee_rate = acc_cw_rate
+    condition_check = (acc_cw_rate == 0) or (acc_selected is GDS_FALSE)
+    if condition_check and (pol_atm_rate is not None) and (pol_branch_rate is not None):
+        final_cash_withdrawal_fee_rate = max(pol_atm_rate, pol_branch_rate)
+
+current_disbursement_fee = max(final_limit * (disbursement_fee_rate / 100), disbursement_fee_min_amount)
+final_cash_withdrawal_fee = (final_limit - current_disbursement_fee - final_cb_fixed_fee) * final_cash_withdrawal_fee_rate
+
+rate_to_gel = uf_currency_conversion_logic(fx_rates, node_currency, "GEL", NBGExchangeRates)
+
+
+final_monthly_payment_amount_gel = final_monthly_payment_amount * rate_to_gel
+final_monthly_payment_amount_long_gel = final_monthly_payment_amount_long * rate_to_gel
 
 offerinfos = safe_get_node(record.system.application.tbcbank.response.offers.offerinfo)
 
 if len(offerinfos) == 0:
+    
     record.system.application.tbcbank.response.offers.offerinfo[0].creditproduct.termmonths = final_term
     record.system.application.tbcbank.response.offers.offerinfo[0].creditproduct.interestrate = final_rate
-    record.system.application.tbcbank.response.offers.offerinfo[0].creditproduct.monthlypaymentamount = new_pmt + fixed_insurance
+    record.system.application.tbcbank.response.offers.offerinfo[0].creditproduct.monthlypaymentamount = final_monthly_payment_amount
+    record.system.application.tbcbank.response.offers.offerinfo[0].creditproduct.monthlypaymentamountgel = final_monthly_payment_amount_gel
+    record.system.application.tbcbank.response.offers.offerinfo[0].creditproduct.longtermmonthlypaymentamount = final_monthly_payment_amount_long
+    record.system.application.tbcbank.response.offers.offerinfo[0].creditproduct.longtermmonthlypaymentamountgel = final_monthly_payment_amount_long_gel
+    record.system.application.tbcbank.response.offers.offerinfo[0].creditproduct.firsttrancheamountdisbursed = 0
+    record.system.application.tbcbank.response.offers.offerinfo[0].creditproduct.secondtrancheamountdisbursed = 0
+    record.system.application.tbcbank.response.offers.offerinfo[0].creditproduct.effectiveapr = 20 # droebiti
+    
+    if str(applicationid).endswith("0"):
+        record.system.application.tbcbank.response.offers.offerinfo[0].offerdetails.npveffectiveapr = final_eff_apr
+    else:
+        record.system.application.tbcbank.response.offers.offerinfo[0].offerdetails.npveffectiveapr = None
+        
     if final_limit != credit_limit_amount:
         record.system.application.tbcbank.response.offers.offerinfo[0].creditproduct.creditlimitamount = final_limit
     
     record.system.application.tbcbank.response.offers.offerinfo[0].offerdetails.isnpvinfinity = final_is_infinity
+    
+    record.system.application.tbcbank.response.offers.offerinfo[0].offerdetails.cbfixedfeeamount = final_cb_fixed_fee
+    record.system.application.tbcbank.response.offers.offerinfo[0].offerdetails.cashwithdrawalfeerate = final_cash_withdrawal_fee_rate
+    record.system.application.tbcbank.response.offers.offerinfo[0].offerdetails.cashwithdrawalfee = final_cash_withdrawal_fee
 else:
     for i in range(len(offerinfos)):
         record.system.application.tbcbank.response.offers.offerinfo[i].creditproduct.termmonths = final_term
         record.system.application.tbcbank.response.offers.offerinfo[i].creditproduct.interestrate = final_rate
-        record.system.application.tbcbank.response.offers.offerinfo[i].creditproduct.monthlypaymentamount = new_pmt + fixed_insurance
+        record.system.application.tbcbank.response.offers.offerinfo[i].creditproduct.monthlypaymentamount = final_monthly_payment_amount
+        record.system.application.tbcbank.response.offers.offerinfo[i].creditproduct.monthlypaymentamountgel = final_monthly_payment_amount_gel
+        record.system.application.tbcbank.response.offers.offerinfo[i].creditproduct.longtermmonthlypaymentamount = final_monthly_payment_amount_long
+        record.system.application.tbcbank.response.offers.offerinfo[i].creditproduct.longtermmonthlypaymentamountgel = final_monthly_payment_amount_long_gel
+        record.system.application.tbcbank.response.offers.offerinfo[i].creditproduct.firsttrancheamountdisbursed = 0
+        record.system.application.tbcbank.response.offers.offerinfo[i].creditproduct.secondtrancheamountdisbursed = 0
+        record.system.application.tbcbank.response.offers.offerinfo[i].creditproduct.effectiveapr = 20 # droebiti
+        if str(applicationid).endswith("0"):
+            record.system.application.tbcbank.response.offers.offerinfo[i].offerdetails.npveffectiveapr = final_eff_apr
+        else:
+            record.system.application.tbcbank.response.offers.offerinfo[i].offerdetails.npveffectiveapr = None
+        
         if final_limit != credit_limit_amount:
             record.system.application.tbcbank.response.offers.offerinfo[i].creditproduct.creditlimitamount = final_limit
         record.system.application.tbcbank.response.offers.offerinfo[i].offerdetails.isnpvinfinity = final_is_infinity
+
+        record.system.application.tbcbank.response.offers.offerinfo[i].offerdetails.cbfixedfeeamount = final_cb_fixed_fee
+        record.system.application.tbcbank.response.offers.offerinfo[i].offerdetails.cashwithdrawalfeerate = final_cash_withdrawal_fee_rate
+        record.system.application.tbcbank.response.offers.offerinfo[i].offerdetails.cashwithdrawalfee = final_cash_withdrawal_fee

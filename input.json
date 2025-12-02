@@ -799,7 +799,7 @@
                             {
                                 "CurrencyCodeFrom": "USD",
                                 "CurrencyCodeTo": "GEL",
-                                "CurrencyRateSell": 2,
+                                "CurrencyRateSell": 2.43,
                                 "CurrencyRateBuy": 2,
                                 "ExchangeRateType": "NBG",
                                 "ExchangeRateMultiplicity": 1
