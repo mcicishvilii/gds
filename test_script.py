@@ -12,33 +12,6 @@ NBGExchangeRates = fx_rates[fx_rates["ExchangeRateType"] == "NBG"]
 
 fixed_insurance = 0
 
-EFF_APR_CONSTRAINTS = {
-    (0, 299):     [35, 35, 35, 35, 45, 48, 48, 48],
-    (300, 80000): [18, 18, 18, 18, 24, 30, 48, 48],
-}
-
-CONSTRAINT_BUCKETS = [14.9, 15.9, 18.9, 21.9, 24.9, 26.9, 28.9, 999.9]
-
-
-def get_constraint_max_term(amount, eff_apr_percent):
-    selected_row = None
-    
-    if 0 <= amount <= 299:
-        selected_row = EFF_APR_CONSTRAINTS.get((0, 299))
-    elif amount >= 300:
-        selected_row = EFF_APR_CONSTRAINTS.get((300, 80000))
-    
-    if not selected_row:
-        return 48
-
-    col_idx = 7
-    for i, threshold in enumerate(CONSTRAINT_BUCKETS):
-        if eff_apr_percent <= threshold:
-            col_idx = i
-            break
-    
-    val = selected_row[col_idx]
-    return val
 
 def get_fixed_insurance(amount):
     val = 0
@@ -102,10 +75,9 @@ def calculate_offer(app_id, pricing_bin, req_amount, available_pmt, is_payroll, 
         term_step1 = 48 
         final_eff_apr = 26.0
 
-    constraint_term = get_constraint_max_term(req_amount, final_eff_apr)
-    term_step2 = max(term_step1, constraint_term)
-    term_step3 = max(term_step2, product_min_term)
-    term_step4 = min(term_step3, product_max_term)
+    term_step2 = max(term_step1, product_min_term)
+    term_step4 = min(term_step2, product_max_term)
+    
 
     final_limit = req_amount
     final_term = term_step4
