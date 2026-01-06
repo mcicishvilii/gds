@@ -1,6 +1,6 @@
 {
     "Application": {
-        "ApplicationDate": "2025-12-12",
+        "ApplicationDate": "2025-12-13",
         "CallID": 1,
         "CallType": "abc",
         "DeliveryOptionCode": "abc",
@@ -106,10 +106,9 @@
                     "FirstPaymentDate": "2025-01-01",
                     "SpecialConditionSubType": "abc",
                     "SellCampaign": "abc",
-                    "GracePeriod": 3,
+                    "GracePeriod": 0,
                     "GracePeriodType": "All",
-                    "GracePeriodScheduleType": "InterestAccruedAfterEndOfGP",
-                    "ScheduleGenerationType": "abc",
+                    "ScheduleGenerationType": "DistributePercentProportionalAfterGP",
                     "ExceptionPayrollFlag": false,
                     "NonStandardFCLFlag": false,
                     "RMSegment": 123,
@@ -126,7 +125,7 @@
                     "SystemInformation": {
                         "BranchRegion": "abc",
                         "BranchID": "123",
-                        "ApplicationId": "OM23948",
+                        "ApplicationId": "OM239430",
                         "ActionNumber": 123,
                         "DataBaseApplicationID": 10
                     },
@@ -181,8 +180,8 @@
                         {
                             "IsPropertyOwnerFlag": false,
                             "PID": "62003008541",
-                            "BirthDate": "1990-12-12",
-                            "DocumentIssueDate": "2025-01-09",
+                            "BirthDate": "1957-05-12",
+                            "DocumentIssueDate": "2025-02-09",
                             "ApplicantID": "123",
                             "ApplicantType": "Applicant",
                             "Citizenship": "abc",
@@ -258,13 +257,16 @@
                                             "EntityID": "INL1175344",
                                             "LifeInsuranceAmount": 8,
                                             "AccruedInterest": 55.63,
+                                            "MaxDPD6Months": 10,
                                             "PaidPenalty": 0,
                                             "AgreementId": "1097591-13287206",
                                             "BorrowingShare": 1,
                                             "LifeInsuranceShare": 100,
                                             "CloseDateScheduled": "2027-04-25",
-                                            "StartDate": "2025-04-07",
-                                            "CustomerRole": "CLIENT_ROLE_BORROWER",
+                                            "StartDate": "2025-04-25",
+                                            "CustomerRole": "CLIENT_ROLE_CO_BORROWER",
+                                            "PropertyInsuranceTotalAmount": 3000,
+                                            "PropertyInsuranceRate": 0.5,
                                             "InterestRate": 13.9,
                                             "IsProlongation": false,
                                             "IsSelfEmployedIncomeFlag": false,
@@ -274,7 +276,7 @@
                                             "IsInControlGroupFlag": false,
                                             "Is6PaymentsPayedFlag": true,
                                             "IsVariable": true,
-                                            "StartDate_Variable": "2025-09-12",
+                                            "StartDate_Variable": "2025-12-12",
                                             "InterestRate_Variable": 15,
                                             "OutstandingAmount_Variable": 5000,
                                             "InterestRate_Min": 14,
@@ -282,19 +284,18 @@
                                             "IsOwnFundsRefinancing": false,
                                             "LimitAmount": 17500,
                                             "LimitCurrency": "GEL",
-                                            "MonthlyPaymentAmount": 278.59,
-                                            "MaxMonthlyPaymentAmount": 800,
+                                            "MonthlyPaymentAmount": 80,
                                             "NumberOfPaymentsLeft": 29,
                                             "OutstandingAmount": 7300,
                                             "PALRefinanceFlag": false,
-                                            "ProductName": "CONSUMER_LOAN",
+                                            "ProductName": "MORTGAGE_LOAN",
                                             "RefinanceBalance": 7300,
-                                            "RefinanceFlag": false,
-                                            "ClientRefinanceFlag": false,
+                                            "RefinanceFlag": true,
+                                            "ClientRefinanceFlag": true,
                                             "TotalAmountToCover": 7511.2,
                                             "UseProlongationFlag": true,
-                                            "MaxTermLMS": 120,
-                                            "ProlongationFlag": false,
+                                            "MaxTermLMS": 240,
+                                            "ProlongationFlag": true,
                                             "Securities": {
                                                 "Security": [
                                                     {
@@ -307,51 +308,6 @@
                                                 ]
                                             },
                                             "PrePaymentFees": {}
-                                        },
-                                        {
-                                            "EntityID": "TB222",
-                                            "LifeInsuranceAmount": 10,
-                                            "AgreementId": "abc",
-                                            "BorrowingShare": 100,
-                                            "LifeInsuranceShare": 123,
-                                            "DPD": 9,
-                                            "FeePaymentAmount": 123,
-                                            "InstitutionName": "abc",
-                                            "InterestRate": 17,
-                                            "IsProlongation": false,
-                                            "IsSelfEmployedIncomeFlag": true,
-                                            "IsRefinanced": false,
-                                            "IsClosed": false,
-                                            "IsRestructurized": false,
-                                            "IsInControlGroupFlag": false,
-                                            "Is6PaymentsPayedFlag": true,
-                                            "IsVariable": false,
-                                            "IsSold": false,
-                                            "IsOwnFundsRefinancing": false,
-                                            "LimitAmount": 6000,
-                                            "LimitCurrency": "GEL",
-                                            "MonthlyPaymentAmount": 620,
-                                            "MaxMonthlyPaymentAmount": 300,
-                                            "Reserve": 123,
-                                            "OutstandingAmount": 5010,
-                                            "NotUsedOutstandingAmount": 0,
-                                            "PALRefinanceFlag": false,
-                                            "RefinanceBalance": 5010,
-                                            "RefinanceFlag": false,
-                                            "ClientRefinanceFlag": false,
-                                            "CustomerRole": "CLIENT_ROLE_BORROWER",
-                                            "ProductName": "FCL",
-                                            "CEBorrowingShare": 100,
-                                            "StartDate": "2025-11-07",
-                                            "CloseDateScheduled": "2027-11-07",
-                                            "NumberOfPaymentsLeft": 1,
-                                            "RepaymentDate": "2026-01-06",
-                                            "IsInsiderLoan": false,
-                                            "TotalAmountToCover": 1,
-                                            "UseProlongationFlag": true,
-                                            "MaxTermLMS": 48,
-                                            "ProlongationFlag": false,
-                                            "ProductCategory": "abc"
                                         }
                                     ]
                                 },
@@ -459,7 +415,19 @@
                                             "Amount": 3000
                                         },
                                         {
-                                            "Period": 2,
+                                            "Period": 3,
+                                            "Amount": 3000
+                                        },
+                                        {
+                                            "Period": 4,
+                                            "Amount": 3000
+                                        },
+                                        {
+                                            "Period": 5,
+                                            "Amount": 3000
+                                        },
+                                        {
+                                            "Period": 6,
                                             "Amount": 3000
                                         }
                                     ]
@@ -480,25 +448,37 @@
                                     "IncomeModelLimit": 600,
                                     "IsPredictedClass": false,
                                     "SelfEmployedIncomeTransactionHistory": {
-                                        "Limit": 13000,
+                                        "Limit": 300,
                                         "TotalLimitP5": 12000,
                                         "TotalLimitP3": 11000,
                                         "IncomeAmount": [
                                             {
                                                 "Period": 2,
-                                                "Amount": 5000
+                                                "Amount": 1
                                             },
                                             {
                                                 "Period": 2,
-                                                "Amount": 5000
+                                                "Amount": 1
+                                            },
+                                            {
+                                                "Period": 2,
+                                                "Amount": 500
                                             },
                                             {
                                                 "Period": 3,
-                                                "Amount": 5000
+                                                "Amount": 550
+                                            },
+                                            {
+                                                "Period": 5,
+                                                "Amount": 550
                                             },
                                             {
                                                 "Period": 6,
-                                                "Amount": 5000
+                                                "Amount": 750
+                                            },
+                                            {
+                                                "Period": 4,
+                                                "Amount": 400
                                             }
                                         ]
                                     },
@@ -506,7 +486,7 @@
                                         "Expense": 0.3,
                                         "OtherIncomeAmount": [
                                             {
-                                                "Period": 3,
+                                                "Period": 2,
                                                 "Amount": 700,
                                                 "Company": "YANDEX"
                                             },
@@ -521,7 +501,17 @@
                                                 "Company": "YANDEX"
                                             },
                                             {
-                                                "Period": 3,
+                                                "Period": 4,
+                                                "Amount": 700,
+                                                "Company": "YANDEX"
+                                            },
+                                            {
+                                                "Period": 5,
+                                                "Amount": 700,
+                                                "Company": "YANDEX"
+                                            },
+                                            {
+                                                "Period": 6,
                                                 "Amount": 700,
                                                 "Company": "YANDEX"
                                             }
@@ -532,7 +522,7 @@
                                     "TransferAmounts": {
                                         "TransferAmount": [
                                             {
-                                                "Period": 1,
+                                                "Period": 2,
                                                 "Amount": 500,
                                                 "Country": "ITA",
                                                 "Currency": "USD",
@@ -583,7 +573,7 @@
                                     "ScoringReasons": {
                                         "ReasonCount": 123
                                     },
-                                    "BureauGrade": "N/A",
+                                    "BureauGrade": "A",
                                     "CBProbabilityOfDefault": 123
                                 },
                                 "CreditBureauSubscribers": {
@@ -757,21 +747,19 @@
                                         "IsIncomeInGeorgia": false,
                                         "IsExceptionPhotoJob": false,
                                         "ApplicantIncome": {
-                                            "IncomeAmount": 4000,
-                                            "IncomeAmountGEL": 4000,
+                                            "IncomeAmount": 1500,
+                                            "IncomeAmountGEL": 1500,
                                             "IncomeCurrency": "GEL",
                                             "IncomeId": 123,
                                             "IsCurrencyRisk1": false,
                                             "IsBusinessOwnerFlag": false,
-                                            "IncomeSource": "OTHER",
+                                            "IncomeSource": "TBC_PAYROLL",
                                             "IncomeType": "INCOME_TYPE_SALARY",
                                             "EntityID": "abc",
                                             "SenderAge": 123,
                                             "IncomeBank": "abc",
-                                            "IsIncomeApprovedByPhoto": true,
-                                            "Expense": 80,
+                                            "IsIncomeApprovedByPhoto": false,
                                             "NBGMaxNetIncome": 900,
-                                            "NBGExpenseRate": 10,
                                             "OtherBankPeriod": 123,
                                             "TbcSalaryPeriod": 123,
                                             "CompanyName": "abc",
@@ -788,25 +776,25 @@
                                     "PayerDetail": [
                                         {
                                             "IncomeType": "SALARY",
-                                            "Income": 10000,
+                                            "Income": 4000,
                                             "SmallBussinesRevenue": 123,
                                             "TaxableTotalIncome": 0,
-                                            "Period": 11,
+                                            "Period": 2,
                                             "TaxCode": "5555555",
                                             "IsTaxCodePID": true
                                         },
                                         {
                                             "IncomeType": "SALARY",
-                                            "Income": 10000,
+                                            "Income": 4000,
                                             "SmallBussinesRevenue": 123,
                                             "TaxableTotalIncome": 0,
-                                            "Period": 11,
+                                            "Period": 2,
                                             "TaxCode": "5555555",
                                             "IsTaxCodePID": true
                                         },
                                         {
                                             "IncomeType": "SALARY",
-                                            "Income": 10000,
+                                            "Income": 4000,
                                             "SmallBussinesRevenue": 123,
                                             "TaxableTotalIncome": 0,
                                             "Period": 3,
@@ -815,7 +803,7 @@
                                         },
                                         {
                                             "IncomeType": "SALARY",
-                                            "Income": 10000,
+                                            "Income": 4000,
                                             "SmallBussinesRevenue": 123,
                                             "TaxableTotalIncome": 0,
                                             "Period": 4,
@@ -824,10 +812,19 @@
                                         },
                                         {
                                             "IncomeType": "SALARY",
-                                            "Income": 30000,
+                                            "Income": 4000,
                                             "SmallBussinesRevenue": 123,
                                             "TaxableTotalIncome": 0,
                                             "Period": 5,
+                                            "TaxCode": "5555555",
+                                            "IsTaxCodePID": true
+                                        },
+                                        {
+                                            "IncomeType": "SALARY",
+                                            "Income": 4000,
+                                            "SmallBussinesRevenue": 123,
+                                            "TaxableTotalIncome": 0,
+                                            "Period": 6,
                                             "TaxCode": "5555555",
                                             "IsTaxCodePID": true
                                         }
@@ -918,14 +915,14 @@
                         }
                     },
                     "PayrollOffer": {
-                        "DisbursementFeeRate": 123,
+                        "DisbursementFeeRate": 2,
                         "StandardInsuranceRate": 123,
-                        "CashWithdrawalFeeRate": 123,
-                        "MinInterestRate": 123,
-                        "MaxInterestRate": 123,
+                        "CashWithdrawalFeeRate": 3,
+                        "MinInterestRate": 9,
+                        "MaxInterestRate": 12,
                         "PayrollOfferOwner": "abc",
                         "EmployerODB": "abc",
-                        "ExceptionPayrollFlag": true
+                        "ExceptionPayrollFlag": false
                     }
                 },
                 "GeneralInfo": {
