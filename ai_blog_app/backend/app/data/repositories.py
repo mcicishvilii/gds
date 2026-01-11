@@ -7,7 +7,7 @@ class YesNoApiRepository(IDecisionRepository):
         self.url = "https://yesno.wtf/api"
 
     async def fetch_decision(self) -> Decision:
-        async with httpx.AsyncClient() as client:
+        async with httpx.AsyncClient(verify=False) as client:
             response = await client.get(self.url)
             data = response.json()
             return Decision(
