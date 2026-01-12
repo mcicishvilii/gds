@@ -4,13 +4,13 @@ export class DecisionRepository {
     }
 
     async fetchDecision() {
-        try {
-            const response = await fetch(`${this.baseUrl}/decision`);
-            if (!response.ok) throw new Error("Backend unreachable");
-            return await response.json();
-        } catch (error) {
-            console.error("Repository Error:", error);
-            throw error;
-        }
+        const token = localStorage.getItem('access_token');
+        const response = await fetch(`${this.baseUrl}/decision`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (response.status === 401) throw { status: 401 };
+        return await response.json();
     }
 }
