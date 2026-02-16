@@ -1,86 +1,61 @@
-request = record.system.application.tbcbank.request
-product = record.system.application.decisionresponse.product
+from datetime import timedelta
 
-decisions = product.decision
+def uf_control_group_scoring_is_sec_loan_6_month(apm_applications, tbc_loans, application_date, is_self_employed_income_flag):
 
-recalculatecall = record.system.application.recalculatecall or GDS_FALSE
-updatepricingflag = record.system.application.updatepricingflag or GDS_FALSE
-behavioural_bin = record.system.application.tbcbank.request.applicationdata.behaviouralbin
-scoring_bin = record.system.application.tbcbank.request.applicationdata.scoringbin
-is_selfemployed_income_flag = record.system.application.tbcbank.request.applicationdata.isselfemployedincomeflag or GDS_FALSE
-segment_group = record.system.application.tbcbank.response.checkresult.segmentgroup
-check_income_gel = record.system.application.tbcbank.response.checkresult.incomeestimations.applicationincomeestimation.incomeestimation.checkincomegel or 0
-bureau_grade = record.system.application.tbcbank.request.applicants.applicant[0].creditbureauinfo.creditrating.bureaugrade
-tbc_employee = record.system.application.tbcbank.request.applicants.applicant[0].internaldatainfo.clientstatusinfo.tbcemployee or GDS_FALSE
-exception_flag = record.system.application.tbcbank.request.applicants.applicant[0].internaldatainfo.clientstatusinfo.exceptionflag or GDS_FALSE
+    if tbc_loans.GetNodeKey() != -1:
+        for j in range(len(tbc_loans)):
+            tbc_loan = tbc_loans[j]
 
-def decision_dependon_exceptionflag():
-    if exception_flag == GDS_TRUE and segment_group != PHOTOS:
-        add_decision_once(product, "D124", "High Risk", result="Investigate")
-    else:
-        add_decision_once(product, "D124", "High Risk", result="Decline")
+            product_name = tbc_loan.productname
+            is_in_control_group_flag = tbc_loan.isincontrolgroupflag
+            customer_role = tbc_loan.customerrole
+            start_date = tbc_loan.startdate
 
-def segment_group_common_decisions():
-    if segment_group == OTHER or segment_group == PHOTOS:
-        if segment_group == PHOTOS:
-            if bureau_grade in ("A", "B", "C1", "C2", "C3", "D1"):
-                add_decision_once(product, "A400", "Low Risk", result="Approve")
-            else:
-                decision_dependon_exceptionflag()
-        else:
-            if not check_income_gel:
-                add_decision_once(product, "I300", "Medium Risk", result="Investigate")
-            else:
-                add_decision_once(product, "A400", "Low Risk", result="Approve")
-    else:
-        add_decision_once(product, "A400", "Low Risk", result="Approve")
+            app_date_less_than_6_months = (application_date - start_date) < timedelta(days=182)
 
-#final decisions >
-if tbc_employee == GDS_FALSE and recalculatecall == GDS_FALSE and updatepricingflag == GDS_FALSE:
-    if behavioural_bin:
-        if behavioural_bin > 6:
-            decision_dependon_exceptionflag()
-        else:
-            if is_selfemployed_income_flag == GDS_TRUE:
-                if behavioural_bin > 4:
-                    decision_dependon_exceptionflag()
-                else:
-                    add_decision_once(product, "A400", "Low Risk", result="Approve")
-            else:
-                segment_group_common_decisions()
-    else:
-        if scoring_bin > 8:
-            decision_dependon_exceptionflag()
-        else:
-            if is_selfemployed_income_flag == GDS_TRUE:
-                if scoring_bin == 8:
-                    decision_dependon_exceptionflag()
-                else:
-                    add_decision_once(product, "A400", "Low Risk", result="Approve")
-            else:
-                segment_group_common_decisions()
-else:
-    add_decision_once(product, "A400", "Low Risk", result="Approve")
+            if (
+                product_name == "FCL"
+                and is_in_control_group_flag == GDS_TRUE
+                and customer_role == CLIENT_ROLE_BORROWER
+                and app_date_less_than_6_months
+            ):
+                return False
 
-application_date = record.system.application.applicationdate
-is_self_employed_income_flag = record.system.application.tbcbank.request.applicationdata.isselfemployedincomeflag
-applicants = record.system.application.tbcbank.request.applicants.applicant
+    if apm_applications.GetNodeKey() != -1:
+        for j in range(len(apm_applications)):
+            apm_application = apm_applications[j]
 
+            product_name = apm_application.productname
+            is_in_control_group_flag = apm_application.isincontrolgroupflag
+            is_in_progress = apm_application.isinprogress
+            decision_status = apm_application.applicationdecisionstatus
 
+            if (
+                product_name in ("CL_WS", "FCL")
+                and is_in_control_group_flag == GDS_TRUE
+                and is_in_progress == GDS_TRUE
+                and decision_status == "APPROVE"
+            ):
+                return False
 
-for a in range(len(applicants)):
-    applicant = applicants[a]
-    apm_applications = applicant.internaldatainfo.apmapplicationhistory.apmapplication
-    tbc_loans = applicant.internaldatainfo.basiccredithistory.loan
-    
-    exception_flag = applicant.internaldatainfo.clientstatusinfo.exceptionflag
-    
-    if uf_control_group_scoring_is_sec_loan_6_month(apm_applications, tbc_loans, application_date, is_self_employed_income_flag):
-        if decisions.GetNodeKey() != -1 and len(decisions) != 0:
-            for i in decisions.Indexes():
-                code = decisions[i].reason.reasoncode
-                if code == "D124" and exception_flag != GDS_TRUE:
-                    decisions[i].Delete()
-                    add_decision_once(product, "A400", "Low Risk", result="Approve")
-                    request.applicationdata.isincontrolgroup = GDS_TRUE
-                    request.applicationdata.controlgroup = "SecLoan6Month"
+    if tbc_loans.GetNodeKey() != -1:
+        for j in range(len(tbc_loans)):
+            loan = tbc_loans[j]
+
+            product_name = loan.productname
+            start_date = loan.startdate
+            max_dpd_6_months = loan.maxdpd6months or 0
+            is_restructurized = loan.isrestructurized
+
+            app_date_less_than_12 = (application_date - start_date) < timedelta(days=365)
+
+            if (
+                product_name in {"CONSUMER_LOAN","MORTGAGE_LOAN"}
+                and app_date_less_than_12
+                and max_dpd_6_months < 8
+                and is_restructurized == GDS_FALSE
+                and is_self_employed_income_flag == GDS_FALSE
+            ):
+                return True
+
+    return False
