@@ -1,0 +1,42 @@
+"BehaviouralScoring": {
+    "RatingClass": "A",
+    "ProbabilityOfDefault": 1.1,
+    "Bin": "1",
+    "FCLProbabilityDefault": 1.1,
+    "BigDataScoring": {
+        "Scoring": [
+            {
+                "SegmentGroup": "Payroll_5",
+                "Bin": 5
+            },
+            {
+                "SegmentGroup": "Payroll_3",
+                "Bin": 2
+            },
+            {
+                "SegmentGroup": "Payroll_1",
+                "Bin": 1
+            },
+            {
+                "SegmentGroup": "RS",
+                "Bin": 1
+            },
+            {
+                "SegmentGroup": "OB",
+                "Bin": 1
+            },
+            {
+                "SegmentGroup": "Transfer",
+                "Bin": 1
+            },
+            {
+                "SegmentGroup": "OTHER",
+                "Bin": 5
+            },
+            {
+                "SegmentGroup": "Photo",
+                "Bin": 1
+            }
+        ]
+    }
+},
